@@ -15,9 +15,9 @@ import com.mitocode.javaweb.springbootmybatis.cliente.domain.Cliente;
 @Controller
 @RequestMapping("/cliente")
 public class ClienteController {
-
+	
 	@Autowired
-	private ClienteService clienteService; 
+	private ClienteService clienteService;
 	
 	@ModelAttribute("modulo")
 	public String modulo() {
@@ -25,7 +25,7 @@ public class ClienteController {
 	}
 	
 	@GetMapping("/resumen")
-	public String resumenCliente(HttpSession session, ModelMap model) {
+	public String resumentCliente(HttpSession session, ModelMap model) {
 		Cliente cliente = (Cliente) session.getAttribute("clienteLogin");
 		
 		cliente = clienteService.obtenerCliente(cliente.getId());
@@ -34,5 +34,6 @@ public class ClienteController {
 		
 		return "cliente/resumen";
 	}
+	
 	
 }

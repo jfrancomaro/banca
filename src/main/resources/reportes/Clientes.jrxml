@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.13.0.final using JasperReports Library version 6.13.0-46ada4d1be8f3c5985fd0b6146f3ed44caed6f05  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Clientes" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3bdfaee6-5918-4e96-b97e-fd0418e00557">
+	<property name="com.jaspersoft.studio.data.sql.tables" value="Y2xpZW50ZSAsMTUsMTUsNGU4ZGEwYzUtNGYyNi00YTYxLWIwYTQtZWM3YmRhOTZjN2M3Ow=="/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="JWD_Banking"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="459"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="530"/>
+	<parameter name="titulo" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT cliente.id,
+	cliente.nombres,
+	cliente.documento,
+	cliente.fecha_nacimiento,
+	cliente.rol
+FROM cliente]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<field name="nombres" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nombres"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<field name="documento" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="documento"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<field name="fecha_nacimiento" class="java.time.LocalDate">
+		<property name="com.jaspersoft.studio.field.label" value="fecha_nacimiento"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<field name="rol" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="rol"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<variable name="FORMATO_FECHA" class="java.lang.String">
+		<variableExpression><![CDATA["dd/MM/yyyy"]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="24" width="550" height="30" uuid="aa768916-56a4-4bf6-8893-54cabaafa1c6"/>
+				<textElement textAlignment="Center">
+					<font size="19" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{titulo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="31" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="30" uuid="8e98a6f2-6c85-4112-830e-2f87281f11fa">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d61ebdfe-a2e7-4340-a659-fb38f560c681"/>
+				</reportElement>
+				<text><![CDATA[id]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="125" height="30" uuid="2ce03a21-86be-47c7-9800-a7794550ecb2">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ac1f9027-6587-4a63-bae3-398bbc071939"/>
+				</reportElement>
+				<text><![CDATA[Documento - Nombres]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="227" y="0" width="100" height="30" uuid="0ea5afec-c69d-4e64-a7c6-78cd60766062">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1134d1cf-4b1e-49f4-b34a-61b9f51134bf"/>
+				</reportElement>
+				<text><![CDATA[fecha_nacimiento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="330" y="0" width="100" height="30" uuid="39c10532-7121-4d5f-b79f-b7aa24b7109a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dc621dbe-7f7c-468d-94e1-a609f2796518"/>
+				</reportElement>
+				<text><![CDATA[rol]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="31" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="30" uuid="fdaa4607-683d-4f32-ab14-f4dc31de7448">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d61ebdfe-a2e7-4340-a659-fb38f560c681"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="125" height="30" uuid="1f9d4d07-8ab1-4cae-aac4-75bf0ee50446">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ac1f9027-6587-4a63-bae3-398bbc071939"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{documento}.concat(" - ").concat( $F{nombres} )]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="227" y="-1" width="100" height="30" uuid="6d70bd3b-aa60-4fb2-bb59-f6e15207dd3d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1134d1cf-4b1e-49f4-b34a-61b9f51134bf"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{fecha_nacimiento}.format(java.time.format.DateTimeFormatter.ofPattern($V{FORMATO_FECHA} ))]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="330" y="0" width="100" height="30" uuid="878aac42-3fa6-4faf-afd9-c568292b64d6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dc621dbe-7f7c-468d-94e1-a609f2796518"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{rol}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

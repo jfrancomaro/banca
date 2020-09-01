@@ -25,7 +25,7 @@
 			class="fas fa-fw fa-tachometer-alt"></i> <span>Resumen</span></a></li>
 
 	<!-- Divider -->
-	<hr class="sidebar-divider">	
+	<hr class="sidebar-divider">
 
 	<!-- Heading -->
 	<div class="sidebar-heading">Tarjetas</div>
@@ -35,8 +35,7 @@
 		th:classappend="${modulo == 'tarjetas' ? 'active' : ''}"><a
 		class="nav-link collapsed" href="#" data-toggle="collapse"
 		data-target="#collapseTwo" aria-expanded="true"
-		aria-controls="collapseTwo"> <i class="fas fa-fw fa-cog"></i> 
-		<span>Tarjeta</span></a>
+		aria-controls="collapseTwo"> <i class="fas fa-fw fa-cog"></i> <span>Tarjeta</span></a>
 		<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
 			data-parent="#accordionSidebar"
 			th:classappend="${modulo == 'tarjetas' ? 'show' : ''}">
@@ -45,12 +44,10 @@
 				<h6 class="collapse-header">Opciones:</h6>
 				<a class="collapse-item" th:href="@{/tarjeta/nuevo}"
 					th:classappend="${opcionMenu == 'tarjeta-nuevo' ? 'active' : ''}">
-					Afiliar Tarjeta</a> 
-				<a class="collapse-item" href="#">Bloquear Tarjeta</a> 
-				<a class="collapse-item" href="#">Anular Tarjeta</a>
+					Afiliar Tarjeta</a> <a class="collapse-item" href="#">Bloquear
+					Tarjeta</a> <a class="collapse-item" href="#">Anular Tarjeta</a>
 			</div>
-		</div>
-	</li>
+		</div></li>
 
 	<!-- Nav Item - Cuentas Collapse Menu -->
 	<li class="nav-item" sec:authorize="hasAuthority('USER')"
@@ -89,28 +86,31 @@
 				<h6 class="collapse-header">Transferencias:</h6>
 				<a class="collapse-item" href="#">Entre cuentas </a> <a
 					class="collapse-item" href="#">Otra cuenta</a>
-					<div class="collapse-divider"></div>
+				<div class="collapse-divider"></div>
 			</div>
 		</div></li>
 
 	<!-- Nav Item - Reportes -->
 	<li class="nav-item"
-		th:classappend="${module == 'reportes' ? 'active' : ''}"><a
-		class="nav-link" href="#" data-toggle="collapse"
-		data-target="#collapseReportes" aria-expanded="false"
-		aria-controls="collapseReportes"> <i class="fas fa-fw fa-folder"></i>
-			<span>Reportes</span>
+		th:classappend="${module == 'reportes' ? 'active' : ''}">
+	<a	class="nav-link" href="#" data-toggle="collapse" data-target="#collapseReportes" 
+	 	aria-expanded="false" aria-controls="collapseReportes"> 
+	 	<i class="fas fa-fw fa-folder"></i>
+		<span>Reportes</span>
 	</a>
 		<div id="collapseReportes" class="collapse"
 			aria-labelledby="headingPages" data-parent="#accordionSidebar">
 			<div class="bg-white py-2 collapse-inner rounded">
 				<div class="collapse-header">Clientes:</div>
-				<a class="collapse-item" th:href="@{/reporte/reporte01}">Reporte
-					01 Inline</a> <a class="collapse-item"
-					th:href="@{/reporte/reporte01?mode=attachment}">Reporte 01
-					Download</a>
+				<a class="collapse-item" th:href="@{/reporte/reporte01}">
+					Reporte 01 Inline
+				</a> 
+				<a class="collapse-item" th:href="@{/reporte/reporte01?mode=attachment}">
+					Reporte 01 Download
+				</a>
 			</div>
-		</div></li>
+		</div>
+	</li>
 
 
 	<!-- Sidebar Toggler (Sidebar) -->

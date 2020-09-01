@@ -39,10 +39,64 @@ public class TarjetaController {
 	public String nuevaTarjeta(ModelMap model) {
 		model.put("opcionMenu", "tarjeta-nuevo");
 		model.put("tarjetaNueva", new Tarjeta());
+
 		return "tarjeta/tarjeta-nueva";
 	}
 
-	
+	@PostMapping("/registrar")
+	public String registrarTarjeta(
+			@Valid
+			@ModelAttribute("tarjetaNueva")
+			Tarjeta tarjeta, 
+			BindingResult bindingResult, HttpSession session,
+			ModelMap model) {
+		String resultPage = "";
+
+		if (bindingResult.hasErrors()) {
+			model.put("error", "Completa los campos obligatorios");
+			resultPage = "tarjeta/tarjeta-nueva";
+		} else {
+			Cliente cliente = (Cliente) session.getAttribute("clienteLogin");
+			tarjeta.setCliente(cliente);
+
+			int resultado = tarjetaService.registrarTarjeta(tarjeta);
+
+			if (resultado > 0) {
+				resultPage = "redirect:/cliente/resumen";
+			} else {
+				model.put("error", "No se registro la tarjeta");
+				resultPage = "tarjeta/tarjeta-nueva";
+			}
+		}
+
+		return resultPage;
+	}
+
+	@PostMapping("/eliminar/{id}")
+	@ResponseBody
+	public ResponseEntity<EliminarResponse> eliminarTarjeta(@PathVariable(value = "id") Integer idTarjeta) {
+		Integer row = tarjetaService.eliminarTarjeta(idTarjeta);
+		ResponseEntity<EliminarResponse> response = null;
+
+		if (row > 0) {
+			response = new ResponseEntity<EliminarResponse>(new EliminarResponse("Se eliminó correctamente"),
+					HttpStatus.OK);
+		} else {
+			response = new ResponseEntity<EliminarResponse>(new EliminarResponse("No se eliminó"),
+					HttpStatus.EXPECTATION_FAILED);
+		}
+
+		return response;
+	}
+
+	@GetMapping("/editar/{id}")
+	public String editarTarjeta(@PathVariable(value = "id") Integer idTarjeta, ModelMap model) {
+		Tarjeta tarjeta = tarjetaService.obtenerTarjeta(idTarjeta);
+		model.put("tarjetaEditar", tarjeta);
+
+		return "tarjeta/tarjeta-editar";
+	}
+
 	@PostMapping("/actualizar/{id}")
 	public String actualizarTarjeta(
 			@Valid
@@ -66,80 +120,11 @@ public class TarjetaController {
 
 		return resultPage;
 	}
-	
-	
-	@PostMapping("/registrar")
-	public String registrarTarjeta(
-			@Valid 
-			@ModelAttribute("tarjetaNueva") 
-			Tarjeta tarjeta,
-			BindingResult bindingResult, 
-			HttpSession session,
-			ModelMap model) {
 
-		String resultPage = "";
-
-		if (bindingResult.hasErrors()) {
-			model.put("error", "Completa los campos obligatorios");
-			resultPage = "tarjeta/tarjeta-nueva";
-		} else {
-
-			Cliente cliente = (Cliente) session.getAttribute("clienteLogin");
-			tarjeta.setCliente(cliente);
-
-			Integer resultado = tarjetaService.registrarTarjeta(tarjeta);
-
-			if (resultado > 0) {
-
-				resultPage = "redirect:/cliente/resumen";
-
-			} else {
-				model.put("error", "No se registró la tarjeta");
-				resultPage = "tarjeta/tarjeta-nueva";
-			}
-
-		}
-
-		return resultPage;
-
-	}
-	
-	@PostMapping("/eliminar/{id}")
-	@ResponseBody
-	public ResponseEntity<EliminarResponse> eliminarTarjeta(@PathVariable("id") Integer idTarjeta) {
-		
-		Integer row = tarjetaService.eliminarTarjeta(idTarjeta);
-		
-		ResponseEntity<EliminarResponse> response = null;
-		
-		if (row > 0) {
-			response = new ResponseEntity<EliminarResponse>(new EliminarResponse("Se eliminó correctamente"), HttpStatus.OK);
-		}else {
-			response = new ResponseEntity<EliminarResponse>(new EliminarResponse("No se eliminó"), HttpStatus.EXPECTATION_FAILED);
-		}
-		return response;
-		
-	}
-	
-	@GetMapping("/editar/{id}")
-	public String editarTarjeta(@PathVariable("id") Integer idTarjeta, ModelMap model) {
-		
-		Tarjeta tarjeta = tarjetaService.obtenerTarjeta(idTarjeta);
-		model.put("tarjetaEditar", tarjeta);
-		
-		return "tarjeta/tarjeta-editar";
-		
-	}
-	
 	@Data
 	@AllArgsConstructor
-	class EliminarResponse{
+	class EliminarResponse {
 		private String message;
 	}
-	
-	
-	
-	
-	
 
 }

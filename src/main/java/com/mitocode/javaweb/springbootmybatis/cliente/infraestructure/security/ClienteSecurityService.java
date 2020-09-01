@@ -16,14 +16,15 @@ import com.mitocode.javaweb.springbootmybatis.cliente.application.ClienteService
 import com.mitocode.javaweb.springbootmybatis.cliente.domain.Cliente;
 
 @Service
-public class ClienteSecurityService implements UserDetailsService{
+public class ClienteSecurityService implements UserDetailsService {
 
 	@Autowired
 	private ClienteService clienteService;
-		
+	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Cliente cliente = clienteService.obtenerCliente(username);
+		
 		Collection<GrantedAuthority> roles = new ArrayList<>();
 		roles.add(new SimpleGrantedAuthority(cliente.getRol()));
 		
@@ -31,5 +32,5 @@ public class ClienteSecurityService implements UserDetailsService{
 		
 		return userDetails;
 	}
-	
+
 }

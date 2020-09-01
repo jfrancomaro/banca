@@ -3,6 +3,7 @@ package com.mitocode.javaweb.springbootmybatis.cliente.application;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -14,17 +15,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.test.annotation.Commit;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mitocode.javaweb.springbootmybatis.cliente.domain.Cliente;
 
-@Transactional
-@ContextConfiguration
 @SpringBootTest
+@ContextConfiguration
+@Transactional
 public class ClienteServiceTest {
-
+	
 	private static final Logger LOG = LoggerFactory.getLogger(ClienteServiceTest.class);
 	
 	@Autowired
@@ -32,48 +32,46 @@ public class ClienteServiceTest {
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
-	
+
 	@Test
 	@Disabled
 	public void prueba() {
 		int a = 5;
-		int b = 3;
-		assertTrue((a+b) == 8, "Error en la suma");
+		int b = 8;
+		
+		assertTrue(a + 5 == b , "Error en la suma");
 	}
 	
 	@Test
-	@DisplayName("")
-	public void listarClientes(){
-		Optional<Collection<Cliente>> lista = Optional.of(clienteService.obtenerClientes()) ;
+	@DisplayName("Evaluar la lista de clientes obtenidas de la BD")
+	public void listarClientes() {
+		Optional<Collection<Cliente>> lista = Optional.of(clienteService.obtenerClientes());
 		
-		lista.ifPresent(cliente -> LOG.info(cliente.toString()));
+		lista.ifPresent(cliente -> LOG.debug(cliente.toString()));
 		
-	}	
+	}
 	
 	@Test
-	@Commit
+//	@Commit
 	public void registrarCliente() {
 		Cliente cliente = new Cliente();
-		cliente.setNombres("Vicente Martinez");
-		cliente.setDocumento("70121122");
+		cliente.setNombres("Jorge Nicolas");
+		cliente.setDocumento("88888889");
+		cliente.setFecha_nacimiento(LocalDate.of(1995, 05, 18));
 		cliente.setClave(passwordEncoder.encode("123456"));
 		
-		Integer filas = clienteService.registrarCliente(cliente);
+		int filas = clienteService.registrarCliente(cliente);
 		
 		assertTrue(filas > 0, "No se registro el cliente");
-		
 	}
 	
 	@Test
-	public void datosCliente() {
+	public void obtenerCliente() {
+		Cliente cliente = clienteService.obtenerCliente(8);
 		
-		Cliente cliente = clienteService.obtenerCliente(1);
+		LOG.info("obtenerCliente():"  + cliente.toString());
 		
-		LOG.info("obtener cliente(): " + cliente.toString());
-		
-		assertNotNull(cliente, "No se pudo encontrar el cliente con ID = 1");
-		
+		assertNotNull(cliente, "No se pudo obtener cliente ID=8");
 	}
-	
 	
 }
