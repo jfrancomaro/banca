@@ -1,0 +1,84 @@
+<div class="container-fluid">
+
+	<div class="d-sm-flex align-items-center mb-4">
+		<h1 class="h3 mb-0 pr-2 text-gray">Tarjetas</h1>
+		<a th:href="@{/tarjeta/nuevo}" class="btn btn-success btn-circle btn-sm">
+			<i class="fas fa-plus"></i>
+		</a>
+	</div>
+
+	<div class="row">
+		<h2 th:if="${cliente.tarjetas.isEmpty()}"
+			class="h4 mb-0 text-black">No tiene tarjetas asociadas</h2>
+
+		<div class="table-responsive">
+			<table th:if="${not cliente.tarjetas.isEmpty()}"
+				class="table table-bordered" id="idTablaCliente">
+				<thead>
+					<tr class="thead-dark">
+						<th scope="col">#</th>
+						<th scope="col">Numero Tarjeta</th>
+						<th scope="col">Fecha Vencimiento</th>
+						<th scope="col">Estado</th>
+						<th scope="col">Opciones</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="tarjeta : ${cliente.tarjetas}">
+						<th scope="row" th:text="${tarjeta.id}"></th>
+						<td th:text="${tarjeta.numeroTarjeta}"></td>
+						<td th:text="${tarjeta.fechaVencimiento}"></td>
+						<td th:text="${tarjeta.estado}"></td>
+						<td>
+							<a th:href="@{/tarjeta/editar/{id}(id=${tarjeta.id})}"
+								class="btn btn-info btn-circle btn-sm"> 
+								<i class="fa	s fa-edit"></i>
+							</a>
+							<a href="#"
+								th:onclick="'eliminarTarjeta(' + ${tarjeta.id} + ')'" 
+								class="btn btn-danger btn-circle btn-sm" > 
+								<i class="fas fa-trash"></i>
+							</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	function eliminarTarjeta(id) {
+		Swal.fire({
+			title: 'Eliminar Tarjeta',
+			html: "Esta operaci&oacute;n no se podr&aacute; revertir",
+			icon : "warning",
+			showCancelButton: true,
+			confirmButtonText: 'S&iacute;, eliminar tarjeta',
+			confirmButtonColor: '#d33',
+			showLoaderOnConfirm: true,
+			preConfirm: () => {
+				return fetch("/tarjeta/eliminar/" + id, { method: 'POST' })
+			      .then(response => {
+			    	  if (!response.ok) {
+			    		  throw new Error("Ocurrio un error")
+			    	  }
+			    	  return response.json()
+			      })
+			      .catch(error => {
+			    	  Swal.showValidationMessage(error)
+			      })
+			  },
+			allowOutsideClick: () => !Swal.isLoading()
+		}).then((result) => {
+			if (result.value) {
+				Swal.fire({
+					title: "Resultado",
+					text: result.value.message
+				}).then((result) => {
+					window.location = "/cliente/resumen";
+				})
+			}
+		});
+	} 
+</script>

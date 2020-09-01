@@ -1,0 +1,57 @@
+<div class="container-fluid">
+
+	<div class="card shadow mb-4">
+		<div class="card-header py-3">
+			<h6 class="m-0 font-weight-bold text-primary">Actualizar Tarjeta</h6>
+		</div>
+		<div class="card-body">
+
+			<form th:action="@{/tarjeta/actualizar/{id}(id=${tarjetaEditar.id}) }" th:method="post"
+				th:object="${tarjetaEditar}">
+				<input type="hidden" th:field="*{cliente.id}">
+
+				<div class="alert alert-danger" th:if=${error} th:text="${error}"></div>
+
+				<div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+					<ul class="list list--check" style="margin-block-end: 0;">
+						<li th:each="err : ${#fields.errors('*')}" th:text="${err}" />
+					</ul>
+				</div>
+
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="idTarjetaNumero">N&uacute;mero Tarjeta</label> <input
+							type="text" class="form-control" id="idTarjetaNumero"
+							placeholder="XXXX-XXXX-XXXX-XXXX" th:field="*{numeroTarjeta}" readonly="readonly">
+					</div>
+					<div class="form-group col-md-6">
+						<label for="idTarjetaFechaVencimiento">Fecha Vencimiento</label>
+
+						<div class="input-group date" data-provide="datepicker"
+							data-date-format="dd/mm/yyyy">
+							<input type="text" class="form-control"
+								th:field="*{fechaVencimiento}" id="idTarjetaFechaVencimiento"
+								placeholder="dd/mm/yyyy">
+							<div class="input-group-append">
+								<span class="input-group-text fa fa-calendar"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="idTarjetaEstado">Estado de la Tarjeta</label> <select
+							class="form-control" name="estado" id="idTarjetaEstado">
+							<option th:field="*{estado}"
+								th:each="estado : ${T(com.mitocode.javaweb.springbootmybatis.tarjeta.domain.TarjetaEstado).values()}"
+								th:value="${estado}" th:text="${estado}"></option>
+						</select>
+					</div>
+				</div>
+				<button type="submit" class="btn btn-success">Actualizar</button>
+				<a class="btn btn-default" th:href="@{/cliente/resumen}">Cancelar
+				</a>
+			</form>
+		</div>
+	</div>
+</div>

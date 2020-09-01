@@ -1,0 +1,31 @@
+<div class="container-fluid">
+	<!-- Page Heading -->
+	<h1 class="h3 mb-4 text-gray-800">
+		Bienvenido
+		<p thremove="tag" th:if="${session.clienteLogin}" th:text="${session.clienteLogin.nombres}" />
+		
+		<th:block th:if="${session.clienteLogin == null}" th:utext="An&oacute;nimo" />
+		
+		<div id="seconds-counter"></div>
+		
+		<div sec:authorize="isAuthenticated()">Logueado</div>
+		
+		<div sec:authorize="hasRole('ROLE_ADMIN')">Banca ADMIN</div>
+		<div sec:authorize="hasRole('ROLE_USER')">Banca USER</div>
+	
+		<div sec:authorize="hasAuthority('ADMIN')">Banca ADMIN</div>
+		<div sec:authorize="hasAuthority('USER')">Banca USER</div>
+		
+	</h1>
+</div>
+
+<script type="text/javascript">
+	var seconds = 0;
+	var element = document.getElementById("seconds-counter");
+	
+	function incrementSeconds() {
+		seconds += 1;
+		element.innerText = "Tienes " + seconds + " segundos.";
+	}
+	setInterval(incrementSeconds, 1000);
+</script>

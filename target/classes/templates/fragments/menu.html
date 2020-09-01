@@ -1,0 +1,121 @@
+<ul
+	class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+	id="accordionSidebar">
+
+	<!-- Sidebar - Brand -->
+	<a
+		class="sidebar-brand d-flex align-items-center justify-content-center"
+		href="#">
+		<div class="sidebar-brand-icon rotate-n-15">
+			<i class="fas fa-laugh-wink"></i>
+		</div>
+		<div class="sidebar-brand-text mx-3">
+			<p thremove="tag" th:if="${session.clienteLogin}"
+				th:text="${session.clienteLogin.nombres}" />
+		</div>
+	</a>
+
+	<!-- Divider -->
+	<hr class="sidebar-divider my-0">
+
+	<!-- Nav Item - Dashboard -->
+	<li class="nav-item" sec:authorize="hasAuthority('USER')"
+		th:classappend="${modulo == 'clientes' ? 'active' : ''}"><a
+		class="nav-link" th:href="@{/cliente/resumen}"> <i
+			class="fas fa-fw fa-tachometer-alt"></i> <span>Resumen</span></a></li>
+
+	<!-- Divider -->
+	<hr class="sidebar-divider">	
+
+	<!-- Heading -->
+	<div class="sidebar-heading">Tarjetas</div>
+
+	<!-- Nav Item - Tarjetas Collapse Menu -->
+	<li class="nav-item" sec:authorize="hasAuthority('USER')"
+		th:classappend="${modulo == 'tarjetas' ? 'active' : ''}"><a
+		class="nav-link collapsed" href="#" data-toggle="collapse"
+		data-target="#collapseTwo" aria-expanded="true"
+		aria-controls="collapseTwo"> <i class="fas fa-fw fa-cog"></i> 
+		<span>Tarjeta</span></a>
+		<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+			data-parent="#accordionSidebar"
+			th:classappend="${modulo == 'tarjetas' ? 'show' : ''}">
+
+			<div class="bg-white py-2 collapse-inner rounded">
+				<h6 class="collapse-header">Opciones:</h6>
+				<a class="collapse-item" th:href="@{/tarjeta/nuevo}"
+					th:classappend="${opcionMenu == 'tarjeta-nuevo' ? 'active' : ''}">
+					Afiliar Tarjeta</a> 
+				<a class="collapse-item" href="#">Bloquear Tarjeta</a> 
+				<a class="collapse-item" href="#">Anular Tarjeta</a>
+			</div>
+		</div>
+	</li>
+
+	<!-- Nav Item - Cuentas Collapse Menu -->
+	<li class="nav-item" sec:authorize="hasAuthority('USER')"
+		th:classappend="${modulo == 'cuentas' ? 'active' : ''}">> <a
+		class="nav-link collapsed" href="#" data-toggle="collapse"
+		data-target="#collapseUtilities" aria-expanded="false"
+		aria-controls="collapseUtilities"> <i class="fas fa-fw fa-wrench"></i>
+			<span>Cuentas</span>
+	</a>
+		<div id="collapseUtilities" class="collapse"
+			aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+			<div class="bg-white py-2 collapse-inner rounded">
+				<h6 class="collapse-header">Opciones:</h6>
+				<a class="collapse-item" href="#">Crear Cuenta</a> <a
+					class="collapse-item" href="#">Asociar Tarjeta</a> <a
+					class="collapse-item" href="#">Cancelar Cuenta</a>
+			</div>
+		</div></li>
+
+	<!-- Divider -->
+	<hr class="sidebar-divider">
+
+	<!-- Heading -->
+	<div class="sidebar-heading">Otros</div>
+
+	<!-- Nav Item - Operaciones Collapse Menu -->
+	<li class="nav-item"><a class="nav-link" href="#"
+		sec:authorize="hasAuthority('ADMIN')" data-toggle="collapse"
+		data-target="#collapseOperaciones" aria-expanded="false"
+		aria-controls="collapseOperaciones"> <i
+			class="fas fa-fw fa-folder"></i> <span>Operaciones</span>
+	</a>
+		<div id="collapseOperaciones" class="collapse"
+			aria-labelledby="headingPages" data-parent="#accordionSidebar">
+			<div class="bg-white py-2 collapse-inner rounded">
+				<h6 class="collapse-header">Transferencias:</h6>
+				<a class="collapse-item" href="#">Entre cuentas </a> <a
+					class="collapse-item" href="#">Otra cuenta</a>
+					<div class="collapse-divider"></div>
+			</div>
+		</div></li>
+
+	<!-- Nav Item - Reportes -->
+	<li class="nav-item"
+		th:classappend="${module == 'reportes' ? 'active' : ''}"><a
+		class="nav-link" href="#" data-toggle="collapse"
+		data-target="#collapseReportes" aria-expanded="false"
+		aria-controls="collapseReportes"> <i class="fas fa-fw fa-folder"></i>
+			<span>Reportes</span>
+	</a>
+		<div id="collapseReportes" class="collapse"
+			aria-labelledby="headingPages" data-parent="#accordionSidebar">
+			<div class="bg-white py-2 collapse-inner rounded">
+				<div class="collapse-header">Clientes:</div>
+				<a class="collapse-item" th:href="@{/reporte/reporte01}">Reporte
+					01 Inline</a> <a class="collapse-item"
+					th:href="@{/reporte/reporte01?mode=attachment}">Reporte 01
+					Download</a>
+			</div>
+		</div></li>
+
+
+	<!-- Sidebar Toggler (Sidebar) -->
+	<div class="text-center d-none d-md-inline">
+		<button class="rounded-circle border-0" id="sidebarToggle"></button>
+	</div>
+
+</ul>
